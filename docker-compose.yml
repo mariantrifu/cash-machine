@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  cash_machine_db_data:
+    image: mariadb:latest
+    ports:
+      - 3366:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=cash-machine
+    volumes:
+      - cash_machine_db_data:/var/lib/mysql:rw
+
+volumes:
+  cash_machine_db_data:
