@@ -1,0 +1,7 @@
+parameters:
+	level: 9
+	paths:
+		- app/Card
+		- app/CashMachine
+		- app/Money
+		- tests

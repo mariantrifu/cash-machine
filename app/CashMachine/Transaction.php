@@ -6,7 +6,12 @@ namespace App\CashMachine;
 
 interface Transaction
 {
-    public function amount(): float;
+    public function amount(): int;
 
+    /**
+     * @return array<array-key, string>
+     */
     public function inputs(): array;
+
+    public function getLimit(): int;
 }

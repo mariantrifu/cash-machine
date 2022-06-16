@@ -1,23 +1,37 @@
 <?php
 
-namespace App\Zeus\App;
+namespace App\Card;
 
-class CardValidation
+use DateTime;
+
+class Card
 {
-    public function validateCardLuhn($attribute, $value, $parameters)
+    private int $number;
+
+    private DateTime $expiration;
+
+    private string $holder;
+
+    private int $cvv;
+
+    public const CVV_DIGITS = 3;
+
+    public function __construct(int $number, DateTime $expiration, string $holder, int $cvv)
     {
-//        return false;
-        return $this->is_luhn_valid($value);
+        $invalidArgumentException = $this->validate($number, $expiration, $holder, $cvv);
+        if ($invalidArgumentException->numberOfMessages() > 0) {
+            throw $invalidArgumentException;
+        }
+
+        $this->number = $number;
+        $this->expiration = $expiration;
+        $this->holder = $holder;
+        $this->cvv = $cvv;
     }
 
-    protected function digits_of($number)
+    private function luhnChecksum(int $card): bool
     {
-        return str_split($number);
-    }
-
-    protected function luhn_checksum($card)
-    {
-        $digits = $this->digits_of($card);
+        $digits = $this->digitsOf($card);
         $odd_digits = array_filter($digits, function($k){
             return ($k%2) != 0;
         }, ARRAY_FILTER_USE_KEY);
@@ -26,34 +40,42 @@ class CardValidation
         }, ARRAY_FILTER_USE_KEY);
         $total = array_sum($odd_digits);
         foreach($even_digits as $digit){
-            $total += array_sum($this->digits_of(2 * $digit));
+            $total += array_sum($this->digitsOf(2 * (int) $digit));
         }
-        return $total % 10;
+        return ($total % 10) == 0;
     }
 
-    protected function is_luhn_valid($card)
+    /**
+     * @return array<array-key, string>
+     */
+    private function digitsOf(int $number): array
     {
-        return $this->luhn_checksum($card) == 0;
+        return str_split((string) $number);
     }
 
-    public function validateCardDate($attribute, $value, $parameters)
+    private function isValidDate(DateTime $dateValue): bool
     {
-        if($this->isValideDate($value)) {
-            return $value;
-        }
-
-        return false;
-    }
-
-    public function isValideDate($dateValue)
-    {
-        $date = strtotime($dateValue);
+        $date = strtotime($dateValue->format('y-m-01'));
         $today = strtotime(date('y-m-01'));
 
-        if($date >= $today) {
-            return true;
+        return $date >= $today;
+    }
+
+    private function validate(int $number, DateTime $expiration, string $holder, int $cvv): InvalidArgumentException
+    {
+        $invalidArgumentException = new InvalidArgumentException();
+        if ($this->luhnChecksum($number) === false) {
+            $invalidArgumentException->addMessage('Invalid Card number.');
         }
 
-        return false;
+        if ($this->isValidDate($expiration) === false) {
+            $invalidArgumentException->addMessage('Card expired.');
+        }
+
+        if (strlen((string)$cvv) !== self::CVV_DIGITS) {
+            $invalidArgumentException->addMessage('Invalid CVV format.');
+        }
+
+        return $invalidArgumentException;
     }
 }

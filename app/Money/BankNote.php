@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Money;
 
-class BankNote
+use JsonSerializable;
+
+class BankNote implements JsonSerializable
 {
-    public Money $money;
+    private Money $money;
     public const ALLOWED_VALUES = [1, 5, 10, 50, 100];
 
     public function __construct(Money $money)
@@ -20,5 +22,10 @@ class BankNote
     public function getMoney(): Money
     {
         return $this->money;
+    }
+
+    public function jsonSerialize(): string
+    {
+        return (string) $this->money->getAmount();
     }
 }
