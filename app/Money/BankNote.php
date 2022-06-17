@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Money;
 
+use App\Card\InvalidArgumentException;
 use JsonSerializable;
 
 class BankNote implements JsonSerializable
@@ -14,7 +15,13 @@ class BankNote implements JsonSerializable
     public function __construct(Money $money)
     {
         if (false === in_array($money->getAmount(),self::ALLOWED_VALUES)) {
-            throw new \InvalidArgumentException('Invalid amount to create a bank note');
+             $exception = new InvalidArgumentException();
+             $exception->addMessage(
+                 key: 'money',
+                 message: sprintf('Invalid amount "%d" to create a bank note', $money->getAmount()),
+             );
+
+             throw $exception;
         }
         $this->money = $money;
     }

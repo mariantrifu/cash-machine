@@ -9,7 +9,7 @@ interface Transaction
     public function amount(): int;
 
     /**
-     * @return array<array-key, string>
+     * @return array<array-key, int>
      */
     public function inputs(): array;
 

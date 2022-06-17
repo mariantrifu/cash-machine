@@ -33,13 +33,13 @@ class BankNoteList
     }
 
     /**
-     * @return array<array-key, string>
+     * @return array<array-key, int>
      */
     public function toArray(): array
     {
         $array = [];
         foreach ($this->banknotes as $banknote) {
-            $array[] = $banknote->jsonSerialize();
+            $array[] = $banknote->getMoney()->getAmount();
         }
         return $array;
     }

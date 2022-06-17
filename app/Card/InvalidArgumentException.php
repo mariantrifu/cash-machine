@@ -13,9 +13,9 @@ class InvalidArgumentException extends Exception
      */
     private array $messages = [];
 
-    public function addMessage(string $message): void
+    public function addMessage(string $key, string $message): void
     {
-        $this->messages[] = $message;
+        $this->messages[$key] = $message;
     }
 
     /**

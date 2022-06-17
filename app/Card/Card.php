@@ -65,15 +65,24 @@ class Card
     {
         $invalidArgumentException = new InvalidArgumentException();
         if ($this->luhnChecksum($number) === false) {
-            $invalidArgumentException->addMessage('Invalid Card number.');
+            $invalidArgumentException->addMessage(
+                key: 'card_number',
+                message: 'Invalid Card number.'
+            );
         }
 
         if ($this->isValidDate($expiration) === false) {
-            $invalidArgumentException->addMessage('Card expired.');
+            $invalidArgumentException->addMessage(
+                key: 'card_date',
+                message: 'Card expired.'
+            );
         }
 
         if (strlen((string)$cvv) !== self::CVV_DIGITS) {
-            $invalidArgumentException->addMessage('Invalid CVV format.');
+            $invalidArgumentException->addMessage(
+                key: 'card_cvv',
+                message: 'Invalid CVV format.'
+            );
         }
 
         return $invalidArgumentException;

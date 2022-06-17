@@ -7,7 +7,7 @@ services:
       - 3366:3306
     environment:
       - MARIADB_ROOT_PASSWORD=root
-      - MARIADB_DATABASE=cash-machine
+      - MARIADB_DATABASE=cashmachine
     volumes:
       - cash_machine_db_data:/var/lib/mysql:rw
 
