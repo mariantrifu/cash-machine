@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Card\Card;
 use App\Card\InvalidArgumentException;
+use App\CashMachine\CardTransaction;
 use App\CashMachine\CashTransaction;
 use App\CashMachine\Service;
+use App\CashMachine\TransactionFactory;
 use App\Money\BankNote;
 use App\Money\BankNoteList;
 use App\Money\Money;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -49,8 +53,28 @@ class CashMachineController extends Controller
             }
             throw ValidationException::withMessages($errors);
         }
-        $transaction = new CashTransaction($bankNoteList);
+        $transaction = TransactionFactory::make(CashTransaction::class, ['banknotes' => $bankNoteList]);
         $this->cashMachine->store($transaction);
-        return view('cash-success', ['success' => 'nice work']);
+        return view('machine-success', ['transaction' => $transaction]);
+    }
+
+    public function addCard(Request $request): View
+    {
+        $date = explode('/',$request->get('card_date'));
+        $expiration = new DateTime(
+            sprintf('%s-%s-01', $date[1], $date[0]),
+        );
+        $data = [
+            'amount' => (int) $request->get('amount'),
+            'inputs' => new Card(
+                number: $request->get('card_number'),
+                expiration: $expiration,
+                holder: $request->get('card_holder'),
+                cvv: $request->get('card_cvv'),
+            ),
+        ];
+        $transaction = TransactionFactory::make(CardTransaction::class, $data);
+        $this->cashMachine->store($transaction);
+        return view('machine-success', ['transaction' => $transaction]);
     }
 }

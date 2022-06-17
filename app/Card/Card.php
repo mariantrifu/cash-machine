@@ -87,4 +87,17 @@ class Card
 
         return $invalidArgumentException;
     }
+
+    /**
+     * @return array<string, DateTime|int|string>
+     */
+    public function toArray(): array
+    {
+        return [
+            'number' => $this->number,
+            'holder' => $this->holder,
+            'expiration' => $this->expiration,
+            'cvv' => $this->cvv
+        ];
+    }
 }

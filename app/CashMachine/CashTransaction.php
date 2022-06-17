@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\CashMachine;
 
-use App\Money\BankNote;
 use App\Money\BankNoteList;
 
 class CashTransaction implements Transaction
@@ -14,11 +13,11 @@ class CashTransaction implements Transaction
     public const NUMBER_OF_BANKNOTES = 5;
 
     /**
-     * @param BankNoteList $bankNotes
+     * @param array<string, BankNoteList> $data
      */
-    public function __construct(BankNoteList $bankNotes)
+    public function __construct(array $data)
     {
-        $this->bankNotes = $bankNotes;
+        $this->bankNotes = $data['banknotes'];
     }
 
     public function amount(): int
