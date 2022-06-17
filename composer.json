@@ -45,6 +45,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse -c phpstan.neon --error-format=table --ansi"
         ]
     },
     "extra": {
