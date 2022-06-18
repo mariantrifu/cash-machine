@@ -9,5 +9,5 @@ class Transaction extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['amount', 'inputs'];
+    protected $fillable = ['type', 'amount', 'inputs'];
 }

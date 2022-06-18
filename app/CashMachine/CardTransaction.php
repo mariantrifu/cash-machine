@@ -14,7 +14,7 @@ class CardTransaction implements Transaction
     private Card $inputs;
 
     /**
-     * @param array<string, int> $data
+     * @param array<string, int|Card> $data
      */
     public function __construct(array $data)
     {

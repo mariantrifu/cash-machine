@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ruleset name="MIS PHPMD rule set"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Code Machine
+    </description>
+
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter" />
+    </rule>
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortVariable" />
+        <exclude name="LongVariable" />
+        <exclude name="LongClassName" />
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions">
+                <value>id,to</value>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess" />
+    </rule>
+    <rule ref="rulesets/cleancode.xml/StaticAccess">
+        <properties>
+            <property name="exceptions">
+                <value>
+                    \Illuminate\Validation\ValidationException,
+                    \App\CashMachine\TransactionFactory,
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/controversial.xml" />
+    <exclude-pattern>*app/Providers/*.php</exclude-pattern>
+</ruleset>

@@ -16,9 +16,11 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "phpmd/phpmd": "^2.12",
         "phpstan/phpstan": "^1.7",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^1.0",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
@@ -48,6 +50,12 @@
         ],
         "phpstan": [
             "vendor/bin/phpstan analyse -c phpstan.neon --error-format=table --ansi"
+        ],
+        "phpcs": [
+            "vendor/bin/phpcs --report=full"
+        ],
+        "phpmd": [
+            "vendor/bin/phpmd ./app/ ansi phpmd.xml.dist"
         ]
     },
     "extra": {

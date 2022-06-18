@@ -11,8 +11,11 @@ class TransactionFactory
     /**
      * @param array<string, stdClass> $data
      */
-    public static function make(string $class,array $data): Transaction
+    public static function make(string $class, array $data): Transaction
     {
+        /**
+         * @var Transaction $class
+         */
         return new $class($data);
     }
 }

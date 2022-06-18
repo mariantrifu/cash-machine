@@ -14,12 +14,12 @@ class BankNote implements JsonSerializable
 
     public function __construct(Money $money)
     {
-        if (false === in_array($money->getAmount(),self::ALLOWED_VALUES)) {
+        if (false === in_array($money->getAmount(), self::ALLOWED_VALUES)) {
              $exception = new InvalidArgumentException();
-             $exception->addMessage(
-                 key: 'money',
-                 message: sprintf('Invalid amount "%d" to create a bank note', $money->getAmount()),
-             );
+            $exception->addMessage(
+                key: 'money',
+                message: sprintf('Invalid amount "%d" to create a bank note', $money->getAmount()),
+            );
 
              throw $exception;
         }

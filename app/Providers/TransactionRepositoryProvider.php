@@ -16,9 +16,12 @@ class TransactionRepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(TransactionRepository::class, function () {
-            return new EloquentTransactionRepository($this->app->make(Transaction::class));
-        });
+        $this->app->bind(
+            TransactionRepository::class,
+            function () {
+                return new EloquentTransactionRepository($this->app->make(Transaction::class));
+            }
+        );
     }
 
     /**

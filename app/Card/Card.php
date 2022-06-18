@@ -32,14 +32,22 @@ class Card
     private function luhnChecksum(int $card): bool
     {
         $digits = $this->digitsOf($card);
-        $odd_digits = array_filter($digits, function($k){
-            return ($k%2) != 0;
-        }, ARRAY_FILTER_USE_KEY);
-        $even_digits = array_filter($digits, function($k){
-            return ($k%2) == 0;
-        }, ARRAY_FILTER_USE_KEY);
-        $total = array_sum($odd_digits);
-        foreach($even_digits as $digit){
+        $oddDigits = array_filter(
+            $digits,
+            function ($key) {
+                return ($key % 2) != 0;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+        $evenDigits = array_filter(
+            $digits,
+            function ($key) {
+                return ($key % 2) == 0;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+        $total = array_sum($oddDigits);
+        foreach ($evenDigits as $digit) {
             $total += array_sum($this->digitsOf(2 * (int) $digit));
         }
         return ($total % 10) == 0;

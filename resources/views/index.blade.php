@@ -22,14 +22,21 @@
 </head>
 <body class="antialiased">
 <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-    <form action="/add-money" method="get">
-        Choose Transaction Type: <select name="transactionType" id="">
-            <option value="cash">Cash</option>
-            <option value="card">Card</option>
-            <option value="transfer">Transfer</option>
-        </select>
-        <input type="submit" class="button" value="Choose">
-    </form>
+    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
+            <h2>Cash Machine</h2>
+        </div>
+        <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
+            <form action="/add-money" method="get">
+                Choose Transaction Type: <select name="transactionType" id="">
+                    <option value="cash">Cash</option>
+                    <option value="card">Card</option>
+                    <option value="transfer">Transfer</option>
+                </select>
+                <input type="submit" class="button" value="Choose">
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
