@@ -24,14 +24,13 @@
 <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-            <h2>Card</h2>
+            <h2>Transfer</h2>
         </div>
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-            <form action="/add-card" method="post">
-                Card number: <input type="text" name="card_number"><br>
-                Card holder: <input type="text" name="card_holder"><br>
-                Expiration date: <input type="text" name="card_date"><br>
-                CVV: <input type="text" name="card_cvv"><br>
+            <form action="/add-transfer" method="post">
+                Customer name: <input type="text" name="customer_name"><br>
+                Transfer Date: <input type="text" name="transfer_date"><br>
+                Account number: <input type="text" name="account_number"><br>
                 Amount: <input type="text" name="amount"><br>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <input type="submit" value="Add">

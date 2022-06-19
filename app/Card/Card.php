@@ -2,6 +2,7 @@
 
 namespace App\Card;
 
+use App\Exceptions\InvalidArgumentException;
 use DateTime;
 
 class Card
@@ -15,6 +16,8 @@ class Card
     private int $cvv;
 
     public const CVV_DIGITS = 3;
+
+    public const CARD_STARTS_WITH = 4;
 
     public function __construct(int $number, DateTime $expiration, string $holder, int $cvv)
     {
@@ -64,15 +67,22 @@ class Card
     private function isValidDate(DateTime $dateValue): bool
     {
         $date = strtotime($dateValue->format('y-m-01'));
-        $today = strtotime(date('y-m-01'));
+        $today2Months = strtotime(date('y-m-01', strtotime('+2 months')));
 
-        return $date >= $today;
+        return $date >= $today2Months;
+    }
+
+    private function cardStartsWith(int $number): bool
+    {
+        $digits = $this->digitsOf($number);
+        $first = (int) array_shift($digits);
+        return $first === self::CARD_STARTS_WITH;
     }
 
     private function validate(int $number, DateTime $expiration, string $holder, int $cvv): InvalidArgumentException
     {
         $invalidArgumentException = new InvalidArgumentException();
-        if ($this->luhnChecksum($number) === false) {
+        if ($this->luhnChecksum($number) === false || $this->cardStartsWith($number) === false) {
             $invalidArgumentException->addMessage(
                 key: 'card_number',
                 message: 'Invalid Card number.'
@@ -82,7 +92,7 @@ class Card
         if ($this->isValidDate($expiration) === false) {
             $invalidArgumentException->addMessage(
                 key: 'card_date',
-                message: 'Card expired.'
+                message: 'Invalid card expiration date.'
             );
         }
 

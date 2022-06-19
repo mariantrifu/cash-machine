@@ -8,6 +8,7 @@ use App\CashMachine\CardTransaction;
 use App\CashMachine\CashTransaction;
 use App\CashMachine\Transaction;
 use App\CashMachine\TransactionRepository as TransactionRepositoryAlias;
+use App\CashMachine\TransferTransaction;
 use App\Models\Transaction as EloquentTransaction;
 
 class EloquentRepository implements TransactionRepositoryAlias
@@ -59,6 +60,7 @@ class EloquentRepository implements TransactionRepositoryAlias
         return match (get_class($transaction)) {
             CashTransaction::class => 'cash',
             CardTransaction::class => 'card',
+            TransferTransaction::class => 'transfer',
         };
     }
 }

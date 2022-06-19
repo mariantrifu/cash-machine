@@ -14,12 +14,9 @@ class CashTransaction implements Transaction
 
     public const NUMBER_OF_BANKNOTES = 5;
 
-    /**
-     * @param array<string, BankNoteList> $data
-     */
-    public function __construct(array $data)
+    public function __construct(Inputs $inputsData)
     {
-        $this->bankNotes = $data['banknotes'];
+        $this->bankNotes = $inputsData->getData()['banknotes'];
     }
 
     public function amount(): int

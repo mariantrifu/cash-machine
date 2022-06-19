@@ -19,3 +19,4 @@ Route::get('/', function () {
 Route::get('/add-money', [\App\Http\Controllers\CashMachineController::class, 'selectTransactionType']);
 Route::post('/add-cash', [\App\Http\Controllers\CashMachineController::class, 'addCash']);
 Route::post('/add-card', [\App\Http\Controllers\CashMachineController::class, 'addCard']);
+Route::post('/add-transfer', [\App\Http\Controllers\CashMachineController::class, 'addTransfer']);

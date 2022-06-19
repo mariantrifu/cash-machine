@@ -15,13 +15,10 @@ class CardTransaction implements Transaction
 
     private Card $inputs;
 
-    /**
-     * @param array<string, int|Card> $data
-     */
-    public function __construct(array $data)
+    public function __construct(Inputs $inputsData)
     {
-        $this->amount = $data['amount'];
-        $this->inputs = $data['inputs'];
+        $this->amount = $inputsData->getData()['amount'];
+        $this->inputs = $inputsData->getData()['inputs'];
     }
 
     public function amount(): int

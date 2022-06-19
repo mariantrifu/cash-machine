@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Money;
 
-use App\Card\InvalidArgumentException;
+use App\Exceptions\InvalidArgumentException;
 use JsonSerializable;
 
 class BankNote implements JsonSerializable

@@ -2,7 +2,7 @@
 
 namespace App\CashMachine;
 
-use App\Card\InvalidArgumentException;
+use App\Exceptions\InvalidArgumentException;
 
 class TransactionAmountExceededException extends InvalidArgumentException
 {
