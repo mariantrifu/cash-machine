@@ -9,6 +9,8 @@ use DateTime;
 
 class CardTransaction implements Transaction
 {
+    private ?int $id;
+
     private int $amount;
 
     private Card $inputs;
@@ -38,5 +40,15 @@ class CardTransaction implements Transaction
     public function getLimit(): int
     {
         return 20000;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 }

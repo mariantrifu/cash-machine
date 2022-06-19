@@ -11,7 +11,7 @@ class Service
     ) {
     }
 
-    public function store(Transaction $transaction): void
+    public function store(Transaction $transaction): TransactionView
     {
         $total = $this->transactionRepository->getTotalByTransaction($transaction);
         $total += $transaction->amount();
@@ -29,6 +29,12 @@ class Service
             throw $exception;
         }
 
-        $this->transactionRepository->save($transaction);
+        $transaction = $this->transactionRepository->save($transaction);
+
+        return new TransactionView(
+            id: $transaction->getId(),
+            amount: $transaction->amount(),
+            inputs: $transaction->inputs(),
+        );
     }
 }

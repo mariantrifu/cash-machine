@@ -22,7 +22,7 @@ class EloquentRepository implements TransactionRepositoryAlias
         $this->eloquentTransaction = $eloquentTransaction;
     }
 
-    public function save(Transaction $transaction): void
+    public function save(Transaction $transaction): Transaction
     {
         $type = $this->getTypeByTransaction($transaction);
 
@@ -31,7 +31,9 @@ class EloquentRepository implements TransactionRepositoryAlias
             'amount' => $transaction->amount(),
             'inputs' => json_encode($transaction->inputs()),
         ];
-        $this->eloquentTransaction->create($transactionData);
+        $eloquentTransaction = $this->eloquentTransaction->create($transactionData);
+        $transaction->setId($eloquentTransaction->id);
+        return $transaction;
     }
 
     public function getTotalByTransaction(Transaction $transaction): int

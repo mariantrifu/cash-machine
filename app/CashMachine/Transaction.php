@@ -6,6 +6,10 @@ namespace App\CashMachine;
 
 interface Transaction
 {
+    public function getId(): ?int;
+
+    public function setId(int $id): void;
+
     public function amount(): int;
 
     /**

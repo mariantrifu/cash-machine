@@ -15,6 +15,7 @@ use App\Money\Money;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -35,8 +36,18 @@ class CashMachineController extends Controller
         };
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function addCash(Request $request): View
     {
+        $validator = Validator::make($request->all(), [
+            'money' => 'required|array',
+            'money.*' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            throw ValidationException::withMessages($validator->validate());
+        }
         try {
             $inputMoneys = $request->input('money');
             $bankNoteList = new BankNoteList([]);
@@ -48,8 +59,8 @@ class CashMachineController extends Controller
                 );
             }
             $transaction = TransactionFactory::make(CashTransaction::class, ['banknotes' => $bankNoteList]);
-            $this->cashMachine->store($transaction);
-            return view('machine-success', ['transaction' => $transaction]);
+            $transactionView = $this->cashMachine->store($transaction);
+            return view('machine-success', ['transaction' => $transactionView]);
         } catch (InvalidArgumentException $e) {
             $errors = [];
             foreach ($e->getMessages() as $key => $message) {
@@ -59,6 +70,9 @@ class CashMachineController extends Controller
         }
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function addCard(Request $request): View
     {
         try {
