@@ -10,7 +10,11 @@
 
 `php artisan migrate`
 
-## Run PHP QA tools: phpcs, phpmd. phpstan
+## Start App
+
+`php artisan serve`
+
+## Run PHP QA tools: phpcs, phpmd, phpstan
 
 `composer phpcs` <br>
 `composer phpmd` <br>
