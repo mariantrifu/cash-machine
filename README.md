@@ -10,6 +10,8 @@
 
 `php artisan migrate`
 
-## Run phpstan
+## Run PHP QA tools: phpcs, phpmd. phpstan
 
+`composer phpcs` <br>
+`composer phpmd` <br>
 `composer phpstan`
