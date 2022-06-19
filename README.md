@@ -19,3 +19,7 @@
 `composer phpcs` <br>
 `composer phpmd` <br>
 `composer phpstan`
+
+## Run unit tests with coverage
+
+`php artisan test --coverage`
